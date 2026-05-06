@@ -33,7 +33,7 @@
 		9073D8AD2FAB76B40047D1A8 /* Exceptions for "DiaryApp" folder in "DiaryApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = 9073D8812FAB76B20047D1A8 /* DiaryApp */;
 		};
