@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+extension Date {
+    func dayKey() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale.current
+        return formatter.string(from: self)
+    }
+}
