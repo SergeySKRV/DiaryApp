@@ -18,6 +18,7 @@ final class DiaryListViewController: UIViewController {
     
     private let tableView = UITableView()
     private let emptyStateView = EmptyStateView()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: = Init
     
@@ -36,12 +37,15 @@ final class DiaryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupSearchController()
         bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchEntries()
+        if !viewModel.isSearching {
+            viewModel.fetchEntries()
+        }
     }
     
     // MARK: - Setup
@@ -81,6 +85,14 @@ final class DiaryListViewController: UIViewController {
         ])
     }
     
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Поиск по заголовку и тексту"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
     // MARK: - Binding
     
     private func bindViewModel() {
@@ -96,8 +108,13 @@ final class DiaryListViewController: UIViewController {
         let isEmpty = viewModel.entries.isEmpty
         emptyStateView.isHidden = !isEmpty
         tableView.isHidden = isEmpty
+        
         if isEmpty {
-            emptyStateView.updateText("Пока нет записей. \nНажмите+, чтобы добавить первую!")
+            if viewModel.isSearching {
+                emptyStateView.updateText("Ничего не найдено. \nПопробуйте изменить запрос")
+            } else {
+                emptyStateView.updateText("Пока нет записей. \nНажмите+, чтобы добавить первую!")
+            }
         }
     }
     
@@ -133,5 +150,14 @@ extension DiaryListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let entry = viewModel.entries[indexPath.row]
         router.showEditEntry(entry)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension DiaryListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let query = searchController.searchBar.text else { return }
+        viewModel.search(query)
     }
 }
