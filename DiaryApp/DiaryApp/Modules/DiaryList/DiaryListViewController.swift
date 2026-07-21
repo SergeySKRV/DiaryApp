@@ -12,6 +12,7 @@ final class DiaryListViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel: DiaryListViewModel
+    private let router: DiaryRouter
     
     // MARK: - UI Elements
     
@@ -20,8 +21,9 @@ final class DiaryListViewController: UIViewController {
     
     // MARK: = Init
     
-    init(viewModel: DiaryListViewModel) {
+    init(viewModel: DiaryListViewModel, router: DiaryRouter) {
         self.viewModel = viewModel
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,7 +104,7 @@ final class DiaryListViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapAdd() {
-        print("Navigate to create entry")
+        router.showCreateEntry()
     }
 }
 
@@ -129,6 +131,7 @@ extension DiaryListViewController: UITableViewDataSource {
 extension DiaryListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Navigate to edit entry: \(viewModel.entries[indexPath.row].title)")
+        let entry = viewModel.entries[indexPath.row]
+        router.showEditEntry(entry)
     }
 }
