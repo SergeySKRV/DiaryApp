@@ -18,6 +18,9 @@ final class DiaryListViewModel {
     private var searchWorkItem: DispatchWorkItem?
     private let filterDayKey: String?
     
+    private(set) var isShowingFavoritesOnly = false
+    private(set) var moodFilter: MoodType?
+    
     init(repository: DiaryRepositoryProtocol, dayKey: String? = nil) {
         self.repository = repository
         self.filterDayKey = dayKey
@@ -58,14 +61,45 @@ final class DiaryListViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: workItem)
     }
     
+    // MARK: - Filters & Favorites
+    
+    func toggleFavoritesFilter() {
+        isShowingFavoritesOnly.toggle()
+        fetchEntries()
+    }
+    
+    func toggleFavorite(id: UUID) {
+        repository.toggleFavorite(id: id) { [weak self] _ in
+            self?.fetchEntries()
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
     private func processResult(_ result: Result<[DiaryEntryModel], Error>) {
         switch result {
         case .success(let models):
-            self.entries = models
+            applyFilters(to: models)
         case .failure(let error):
             print("Failed to fetch entries: \(error)")
             self.entries = []
+            self.onDataUpdated?()
         }
+    }
+    
+    private func applyFilters(to models: [DiaryEntryModel]) {
+        var filtered = models
+        
+        if isShowingFavoritesOnly {
+            filtered = filtered.filter { $0.isFavorite }
+        }
+        
+        if let mood = moodFilter {
+            filtered = filtered.filter { $0.mood == mood }
+        }
+        
+        self.entries = filtered
         self.onDataUpdated?()
     }
 }
+

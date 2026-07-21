@@ -179,18 +179,18 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
         }
     }
     
-    //MARK: - Mapping
+    // MARK: - Mapping
     
     private func mapToModel(_ entity: DiaryEntry) -> DiaryEntryModel? {
         guard let id = entity.id,
               let title = entity.title,
               let text = entity.text,
               let createdAt = entity.createdAt,
-              let updatedAt = entity.updatedAt,
-              let dayKey = entity.dayKey else {
+              let updatedAt = entity.updatedAt else {
             return nil
         }
         
+        let dayKey = entity.dayKey ?? createdAt.dayKey()
         let mood = entity.moodRawValue.flatMap { MoodType(rawValue: $0) }
         
         return DiaryEntryModel(

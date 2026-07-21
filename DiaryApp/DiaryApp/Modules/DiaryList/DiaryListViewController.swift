@@ -19,6 +19,7 @@ final class DiaryListViewController: UIViewController {
     private let tableView = UITableView()
     private let emptyStateView = EmptyStateView()
     private let searchController = UISearchController(searchResultsController: nil)
+    private let favoritesBarButtonItem = UIBarButtonItem()
     
     // MARK: = Init
     
@@ -39,6 +40,7 @@ final class DiaryListViewController: UIViewController {
         setupUI()
         setupSearchController()
         bindViewModel()
+        updateFavoritesButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +61,12 @@ final class DiaryListViewController: UIViewController {
             target: self,
             action: #selector(didTapAdd)
         )
+        
+        favoritesBarButtonItem.image = UIImage(systemName: "star")
+        favoritesBarButtonItem.style = .plain
+        favoritesBarButtonItem.target = self
+        favoritesBarButtonItem.action = #selector(didTapFavoritesFilter)
+        navigationItem.leftBarButtonItem = favoritesBarButtonItem
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -111,17 +119,30 @@ final class DiaryListViewController: UIViewController {
         
         if isEmpty {
             if viewModel.isSearching {
-                emptyStateView.updateText("Ничего не найдено. \nПопробуйте изменить запрос")
+                emptyStateView.updateText("Ничего не найдено. \nПопробуйте изменить запрос.")
+            } else if viewModel.isShowingFavoritesOnly {
+                emptyStateView.updateText("Нет избранных записей. \nОтметьте записи звездочкой.")
             } else {
                 emptyStateView.updateText("Пока нет записей. \nНажмите+, чтобы добавить первую!")
             }
         }
     }
     
+    private func updateFavoritesButton() {
+        let imageName = viewModel.isShowingFavoritesOnly ? "star.fill" : "star"
+        favoritesBarButtonItem.image = UIImage(systemName: imageName)
+        favoritesBarButtonItem.tintColor = viewModel.isShowingFavoritesOnly ? .systemYellow : .systemBlue
+    }
+    
     // MARK: - Actions
     
     @objc private func didTapAdd() {
         router.showCreateEntry()
+    }
+    
+    @objc private func didTapFavoritesFilter() {
+        viewModel.toggleFavoritesFilter()
+        updateFavoritesButton()
     }
 }
 
@@ -150,6 +171,23 @@ extension DiaryListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let entry = viewModel.entries[indexPath.row]
         router.showEditEntry(entry)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let entry = viewModel.entries[indexPath.row]
+        
+        let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completionHandler in
+            self?.viewModel.toggleFavorite(id: entry.id)
+            completionHandler(true)
+        }
+        
+        let imageName = entry.isFavorite ? "star.slash.fill" : "star.fill"
+        favoriteAction.image = UIImage(systemName: imageName)
+        favoriteAction.backgroundColor = .systemYellow
+        
+        let config = UISwipeActionsConfiguration(actions: [favoriteAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
     }
 }
 
