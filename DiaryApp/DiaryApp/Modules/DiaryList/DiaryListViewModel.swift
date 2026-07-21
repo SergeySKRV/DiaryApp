@@ -16,22 +16,24 @@ final class DiaryListViewModel {
     
     private(set) var isSearching = false
     private var searchWorkItem: DispatchWorkItem?
+    private let filterDayKey: String?
     
-    init(repository: DiaryRepositoryProtocol) {
+    init(repository: DiaryRepositoryProtocol, dayKey: String? = nil) {
         self.repository = repository
+        self.filterDayKey = dayKey
     }
     
     func fetchEntries() {
         isSearching = false
-        repository.fetchAll { [weak self] result in
-            switch result {
-            case .success(let models):
-                self?.entries = models
-            case .failure(let error):
-                print("Failed to fetch entries: \(error)")
-                self?.entries = []
+        
+        if let dayKey = filterDayKey {
+            repository.fetchEntries(for: dayKey) { [weak self] result in
+                self?.processResult(result)
             }
-            self?.onDataUpdated?()
+        } else {
+            repository.fetchAll { [weak self] result in
+                self?.processResult(result)
+            }
         }
     }
     
@@ -48,18 +50,22 @@ final class DiaryListViewModel {
         let workItem = DispatchWorkItem { [weak self] in
             self?.isSearching = true
             self?.repository.search(query: trimmedQuery) { result in
-                switch result {
-                case .success(let models):
-                    self?.entries = models
-                case .failure(let error):
-                    print("Failed to search entries: \(error)")
-                    self?.entries = []
-                }
-                self?.onDataUpdated?()
+                self?.processResult(result)
             }
         }
         
         searchWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: workItem)
+    }
+    
+    private func processResult(_ result: Result<[DiaryEntryModel], Error>) {
+        switch result {
+        case .success(let models):
+            self.entries = models
+        case .failure(let error):
+            print("Failed to fetch entries: \(error)")
+            self.entries = []
+        }
+        self.onDataUpdated?()
     }
 }

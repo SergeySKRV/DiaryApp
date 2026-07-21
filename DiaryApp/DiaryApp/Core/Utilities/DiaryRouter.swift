@@ -31,6 +31,18 @@ final class DiaryRouter {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func showDayEntries(dayKey: String, date: Date) {
+        let listViewModel = DiaryListViewModel(repository: repository, dayKey: dayKey)
+        let viewController = DiaryListViewController(viewModel: listViewModel, router: self)
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        viewController.title = formatter.string(from: date)
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func popToRoot() {
         navigationController?.popViewController(animated: true)
     }
