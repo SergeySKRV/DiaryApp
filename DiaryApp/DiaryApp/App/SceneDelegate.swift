@@ -35,8 +35,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         calendarNavigationController.tabBarItem = UITabBarItem(title: "Календарь", image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
         
+        let settingsNavigationController = UINavigationController()
+        let settingsViewModel = SettingsViewModel()
+        let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
+        settingsNavigationController.setViewControllers([settingsViewController], animated: false)
+        
+        settingsNavigationController.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.circle.fill"))
+        
         let tabBarController = UITabBarController()
-        tabBarController.setViewControllers([listNavigationController, calendarNavigationController], animated: false)
+        tabBarController.setViewControllers([listNavigationController, calendarNavigationController, settingsNavigationController], animated: false)
         
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
