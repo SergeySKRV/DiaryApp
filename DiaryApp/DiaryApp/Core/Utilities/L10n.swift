@@ -54,5 +54,12 @@ enum L10n {
     static let detailsBodyPlaceholder = NSLocalizedString("details.body.placeholder", comment: "Placeholder for body text view")
     static let accessibilityEntryLabel = NSLocalizedString("accessibility.entry.label", comment: "VoiceOver label for diary entry")
     static let accessibilityEntryHint = NSLocalizedString("accessibility.entry.hint", comment: "VoiceOver hint for diary entry")
+    
+    // MARK: - UX Improvements
+    static let actionEdit = NSLocalizedString("action.edit", comment: "Edit action")
+    static let actionDelete = NSLocalizedString("action.delete", comment: "Delete action")
+    static let actionFavorite = NSLocalizedString("action.favorite", comment: "Add to favorites")
+    static let actionUnfavorite = NSLocalizedString("action.unfavorite", comment: "Remove from favorites")
+    static let pullToRefresh = NSLocalizedString("pull.to.refresh", comment: "Pull to refresh text")
 }
 

@@ -111,7 +111,7 @@ final class DiaryEntryCell: UITableViewCell {
         
         // Accessibility (VoiceOver)
         isAccessibilityElement = true
-        let moodText = model.mood?.localizedName ?? L10n.moodNone
+        _ = model.mood?.localizedName ?? L10n.moodNone
         accessibilityLabel = String(format: L10n.accessibilityEntryLabel, titleLabel.text ?? "", dateLabel.text ?? "")
         accessibilityHint = L10n.accessibilityEntryHint
         accessibilityTraits = .button

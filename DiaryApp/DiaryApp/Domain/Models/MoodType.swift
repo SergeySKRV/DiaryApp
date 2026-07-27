@@ -9,29 +9,29 @@ import Foundation
 
 /// Represents the user's mood attached to a diary entry.
 enum MoodType: String, CaseIterable {
-    case happy
     case calm
-    case neutral
+    case happy
     case sad
     case angry
+    case neutral
     
     var localizedName: String {
         switch self {
-        case .happy: return L10n.moodHappy
         case .calm: return L10n.moodCalm
-        case .neutral: return L10n.moodNeutral
+        case .happy: return L10n.moodHappy
         case .sad: return L10n.moodSad
         case .angry: return L10n.moodAngry
+        case .neutral: return L10n.moodNeutral
         }
     }
     
             var emoji: String {
                 switch self {
-                case .happy: return "😄"
                 case .calm: return "😌"
-                case .neutral: return "😑"
+                case .happy: return "😄"
                 case .sad: return "😔"
                 case .angry: return "😡"
+                case .neutral: return "😑"
                 }
             }
         }

@@ -45,6 +45,10 @@ final class DiaryDetailsViewController: UIViewController {
         let items = MoodType.allCases.map { $0.localizedName }
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+        
+        segmentedControl.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 10, weight: .medium)], for: .normal)
+        segmentedControl.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 10, weight: .bold)], for: .selected)
+        
         return segmentedControl
     }()
     
@@ -171,8 +175,10 @@ final class DiaryDetailsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
+                    HapticManager.shared.success()
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
+                    HapticManager.shared.error()
                     let alert = UIAlertController(title: L10n.detailsErrorTitle, message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: L10n.okAction, style: .default, handler: nil))
                     self?.present(alert, animated: true)
@@ -194,7 +200,7 @@ extension DiaryDetailsViewController: UITextFieldDelegate {
 // MARK: - UITextViewDelegate
 
 extension DiaryDetailsViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         updatePlaceholderVisibility()
     }
 }
