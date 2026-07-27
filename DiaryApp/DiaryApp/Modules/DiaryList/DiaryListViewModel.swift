@@ -61,6 +61,22 @@ final class DiaryListViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: workItem)
     }
     
+    func deleteEntry(at index: Int) {
+        let entry = entries[index]
+        
+        entries.remove(at: index)
+        onDataUpdated?()
+        
+        repository.delete(id: entry.id) { result in
+            switch result {
+            case .success:
+                break
+            case .failure(_):
+                print("Failed to delete entry: /(error")
+            }
+        }
+    }
+    
     // MARK: - Filters & Favorites
     
     func toggleFavoritesFilter() {

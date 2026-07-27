@@ -176,6 +176,13 @@ extension DiaryListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let entry = viewModel.entries[indexPath.row]
         
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completionHandler in
+            self?.viewModel.deleteEntry(at: indexPath.row)
+            completionHandler(true)
+        }
+        deleteAction.image = UIImage(systemName: "trash.fill")
+        deleteAction.backgroundColor = .systemRed
+        
         let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completionHandler in
             self?.viewModel.toggleFavorite(id: entry.id)
             completionHandler(true)
@@ -185,7 +192,7 @@ extension DiaryListViewController: UITableViewDelegate {
         favoriteAction.image = UIImage(systemName: imageName)
         favoriteAction.backgroundColor = .systemYellow
         
-        let config = UISwipeActionsConfiguration(actions: [favoriteAction])
+        let config = UISwipeActionsConfiguration(actions: [deleteAction, favoriteAction])
         config.performsFirstActionWithFullSwipe = true
         return config
     }

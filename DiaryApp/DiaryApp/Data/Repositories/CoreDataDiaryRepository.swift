@@ -115,7 +115,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
         }
     }
     
-// MARK: - Update
+    // MARK: - Update
     
     func update(_ entry: DiaryEntryModel, completion: @escaping (Result<Void, Error>) -> Void) {
         coreDataStack.performBackgroundTask { context in
@@ -168,6 +168,35 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
                 entity.updatedAt = Date()
                 
                 try context.save()
+                DispatchQueue.main.async {
+                    completion(.success(()))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    // MARK: - Delete
+    
+    func delete(id: UUID, completion: @escaping (Result<Void, Error>) -> Void) {
+        coreDataStack.performBackgroundTask { context in
+            let fetchRequest = DiaryEntry.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            
+            do {
+                guard let entity = try context.fetch(fetchRequest).first else {
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(domain: "DiaryRepositoryError", code: 404, userInfo: [NSLocalizedDescriptionKey: "Entry not found"])))
+                    }
+                    return
+                }
+                
+                context.delete(entity)
+                try context.save()
+                
                 DispatchQueue.main.async {
                     completion(.success(()))
                 }
