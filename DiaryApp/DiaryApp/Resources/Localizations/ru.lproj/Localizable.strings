@@ -39,3 +39,10 @@
 /* Notifications */
 "notification.title" = "Дневник";
 "notification.body" = "Время сделать запись в дневнике!";
+
+/* Moods */
+"mood.happy" = "Радостное";
+"mood.calm" = "Спокойное";
+"mood.neutral" = "Нейтральное";
+"mood.sad" = "Грустное";
+"mood.angry" = "Злое";

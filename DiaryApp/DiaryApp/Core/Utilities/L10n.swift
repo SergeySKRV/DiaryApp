@@ -41,4 +41,12 @@ enum L10n {
     // MARK: - Notifications
     static let notificationTitle = NSLocalizedString("notification.title", comment: "Local notification title")
     static let notificationBody = NSLocalizedString("notification.body", comment: "Local notification body")
+    
+    // MARK: - Moods
+    static let moodHappy = NSLocalizedString("mood.happy", comment: "Happy mood")
+    static let moodCalm = NSLocalizedString("mood.calm", comment: "Calm mood")
+    static let moodNeutral = NSLocalizedString("mood.neutral", comment: "Neutral mood")
+    static let moodSad = NSLocalizedString("mood.sad", comment: "Sad mood")
+    static let moodAngry = NSLocalizedString("mood.angry", comment: "Angry mood")
 }
+

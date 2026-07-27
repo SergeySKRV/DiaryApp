@@ -39,3 +39,10 @@
 /* Notifications */
 "notification.title" = "Diary";
 "notification.body" = "Time to write in your diary!";
+
+/* Moods */
+"mood.happy" = "Happy";
+"mood.calm" = "Calm";
+"mood.neutral" = "Neutral";
+"mood.sad" = "Sad";
+"mood.angry" = "Angry";

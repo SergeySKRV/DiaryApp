@@ -33,7 +33,7 @@ final class DiaryDetailsViewController: UIViewController {
     }()
     
     private let moodSegmentedControl: UISegmentedControl = {
-        let items = MoodType.allCases.map { $0.rawValue.capitalized }
+        let items = MoodType.allCases.map { $0.localizedName }
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
         return segmentedControl
