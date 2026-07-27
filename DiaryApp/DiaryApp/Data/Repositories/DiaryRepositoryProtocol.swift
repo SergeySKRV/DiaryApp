@@ -20,4 +20,5 @@ protocol DiaryRepositoryProtocol {
     )
     func update(_ entry: DiaryEntryModel, completion: @escaping (Result<Void, Error>) -> Void)
     func toggleFavorite(id: UUID, completion: @escaping (Result<Void, Error>) -> Void)
+    func delete(id: UUID, completion: @escaping (Result<Void, Error>) -> Void)
 }
