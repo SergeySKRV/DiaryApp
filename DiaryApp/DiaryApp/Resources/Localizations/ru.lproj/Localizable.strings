@@ -41,14 +41,21 @@
 "notification.body" = "Время сделать запись в дневнике!";
 
 /* Moods */
-"mood.happy" = "Радостное";
-"mood.calm" = "Спокойное";
-"mood.neutral" = "Нейтральное";
-"mood.sad" = "Грустное";
-"mood.angry" = "Злое";
+"mood.happy" = "Радость";
+"mood.calm" = "Спокойно";
+"mood.neutral" = "Нейтрально";
+"mood.sad" = "Грусть";
+"mood.angry" = "Злость";
 "mood.none" = "Без настроения";
 
 /* UI Polish */
 "details.body.placeholder" = "Начните писать здесь...";
 "accessibility.entry.label" = "Запись: %@, создана %@";
 "accessibility.entry.hint" = "Двойной тап для редактирования";
+
+/* UX Improvements */
+"action.edit" = "Редактировать";
+"action.delete" = "Удалить";
+"action.favorite" = "В избранное";
+"action.unfavorite" = "Убрать из избранного";
+"pull.to.refresh" = "Потяните для обновления";

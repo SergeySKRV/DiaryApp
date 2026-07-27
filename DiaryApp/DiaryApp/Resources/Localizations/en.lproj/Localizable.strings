@@ -52,3 +52,10 @@
 "details.body.placeholder" = "Start writing here...";
 "accessibility.entry.label" = "Entry: %@, created on %@";
 "accessibility.entry.hint" = "Double tap to edit";
+
+/* UX Improvements */
+"action.edit" = "Edit";
+"action.delete" = "Delete";
+"action.favorite" = "Add to Favorites";
+"action.unfavorite" = "Remove from Favorites";
+"pull.to.refresh" = "Pull to refresh";

@@ -20,6 +20,7 @@ final class DiaryListViewController: UIViewController {
     private let emptyStateView = EmptyStateView()
     private let searchController = UISearchController(searchResultsController: nil)
     private let favoritesBarButtonItem = UIBarButtonItem()
+    private let refreshControl = UIRefreshControl()
     
     // MARK: = Init
     
@@ -68,6 +69,10 @@ final class DiaryListViewController: UIViewController {
         favoritesBarButtonItem.action = #selector(didTapFavoritesFilter)
         navigationItem.leftBarButtonItem = favoritesBarButtonItem
         
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: L10n.pullToRefresh)
+        tableView.refreshControl = refreshControl
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(DiaryEntryCell.self, forCellReuseIdentifier: DiaryEntryCell.reuseIdentifier)
@@ -108,6 +113,10 @@ final class DiaryListViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
                 self?.updateEmptyState()
+                
+                if self?.refreshControl.isRefreshing == true {
+                    self?.refreshControl.endRefreshing()
+                }
             }
         }
     }
@@ -144,6 +153,10 @@ final class DiaryListViewController: UIViewController {
         viewModel.toggleFavoritesFilter()
         updateFavoritesButton()
     }
+    
+    @objc private func didPullToRefresh() {
+        viewModel.fetchEntries()
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -174,26 +187,54 @@ extension DiaryListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let entry = viewModel.entries[indexPath.row]
+            
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completionHandler in
+                HapticManager.shared.impactMedium()
+                self?.viewModel.deleteEntry(at: indexPath.row)
+                completionHandler(true)
+            }
+            deleteAction.image = UIImage(systemName: "trash.fill")
+            deleteAction.backgroundColor = .systemRed
+            
+            let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completionHandler in
+                HapticManager.shared.impactLight()
+                self?.viewModel.toggleFavorite(id: entry.id)
+                completionHandler(true)
+            }
+            
+            let imageName = entry.isFavorite ? "star.slash.fill" : "star.fill"
+            favoriteAction.image = UIImage(systemName: imageName)
+            favoriteAction.backgroundColor = .systemYellow
+            
+            let config = UISwipeActionsConfiguration(actions: [deleteAction, favoriteAction])
+            config.performsFirstActionWithFullSwipe = true
+            return config
+        }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let entry = viewModel.entries[indexPath.row]
         
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completionHandler in
-            self?.viewModel.deleteEntry(at: indexPath.row)
-            completionHandler(true)
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(title: L10n.actionEdit, image: UIImage(systemName: "pencil")) { [weak self] _ in
+                self?.router.showEditEntry(entry)
+            }
+            
+            let favoriteTitle = entry.isFavorite ? L10n.actionUnfavorite : L10n.actionFavorite
+            let favoriteImageName = entry.isFavorite ? "star.slash" : "star.fill"
+            let favoriteAction = UIAction(title: favoriteTitle, image: UIImage(systemName: favoriteImageName)) { [weak self] _ in
+                HapticManager.shared.impactLight()
+                self?.viewModel.toggleFavorite(id: entry.id)
+            }
+            
+            let deleteAction = UIAction(title: L10n.actionDelete, image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+                HapticManager.shared.impactMedium()
+                self?.viewModel.deleteEntry(at: indexPath.row)
+            }
+            
+            return UIMenu(title: "", children: [editAction, favoriteAction, deleteAction])
         }
-        deleteAction.image = UIImage(systemName: "trash.fill")
-        deleteAction.backgroundColor = .systemRed
         
-        let favoriteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completionHandler in
-            self?.viewModel.toggleFavorite(id: entry.id)
-            completionHandler(true)
-        }
-        
-        let imageName = entry.isFavorite ? "star.slash.fill" : "star.fill"
-        favoriteAction.image = UIImage(systemName: imageName)
-        favoriteAction.backgroundColor = .systemYellow
-        
-        let config = UISwipeActionsConfiguration(actions: [deleteAction, favoriteAction])
-        config.performsFirstActionWithFullSwipe = true
         return config
     }
 }
