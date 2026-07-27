@@ -14,4 +14,14 @@ enum MoodType: String, CaseIterable {
     case neutral
     case sad
     case angry
+    
+    var localizedName: String {
+        switch self {
+        case .happy: return L10n.moodHappy
+        case .calm: return L10n.moodCalm
+        case .neutral: return L10n.moodNeutral
+        case .sad: return L10n.moodSad
+        case .angry: return L10n.moodAngry
+        }
+    }
 }

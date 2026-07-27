@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  DiaryApp
+
+  Created by Сергей Скориков on 22.07.2026.
+  
+*/
+
+/* Tabs */
+"tab.list" = "Список";
+"tab.calendar" = "Календарь";
+"tab.settings" = "Настройки";
+
+/* Diary List */
+"diary.title" = "Дневник";
+"diary.search.placeholder" = "Поиск по заголовку и тексту";
+"diary.empty.noEntries" = "Пока нет записей.\nНажмите +, чтобы добавить первую.";
+"diary.empty.noSearchResults" = "Ничего не найдено.\nПопробуйте изменить запрос.";
+"diary.empty.noFavorites" = "Нет избранных записей.\nОтметьте записи звездочкой.";
+"diary.untitled" = "(Без заголовка)";
+
+/* Diary Details */
+"details.title.placeholder" = "Заголовок";
+"details.edit.title" = "Редактировать";
+"details.create.title" = "Новая запись";
+"details.error.title" = "Ошибка";
+"details.empty.error" = "Запись не может быть пустой";
+"action.ok" = "ОК";
+
+/* Calendar */
+"calendar.title" = "Календарь";
+
+/* Settings */
+"settings.title" = "Настройки";
+"settings.reminders" = "Ежедневные напоминания";
+"settings.notifications.off.title" = "Уведомления отключены";
+"settings.notifications.off.message" = "Пожалуйста, разрешите уведомления в настройках устройства";
+
+/* Notifications */
+"notification.title" = "Дневник";
+"notification.body" = "Время сделать запись в дневнике!";
+
+/* Moods */
+"mood.happy" = "Радостное";
+"mood.calm" = "Спокойное";
+"mood.neutral" = "Нейтральное";
+"mood.sad" = "Грустное";
+"mood.angry" = "Злое";

@@ -15,7 +15,7 @@ final class SettingsViewController: UIViewController {
     private let timePicker = UIDatePicker()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ежедневные напоминания"
+        label.text = L10n.settingsReminders
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
     }()
@@ -36,7 +36,7 @@ final class SettingsViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Настройки"
+        title = L10n.settingsTitle
         view.backgroundColor = .systemBackground
         
         reminderSwitch.addTarget(self, action: #selector(switchToggled(_:)), for: .valueChanged)
@@ -73,16 +73,16 @@ final class SettingsViewController: UIViewController {
         timePicker.alpha = viewModel.isRemindersEnabled ? 1.0 : 0.5
     }
     
-    @objc private func switchToggled(_ sw: UISwitch) {
-        viewModel.toggleReminders(enabled: sw.isOn) { [weak self] success in
+    @objc private func switchToggled(_ switchControl: UISwitch) {
+        viewModel.toggleReminders(enabled: switchControl.isOn) { [weak self] success in
             DispatchQueue.main.async {
                 self?.reminderSwitch.isOn = success
                 self?.timePicker.isEnabled = success
                 self?.timePicker.alpha = success ? 1.0 : 0.5
                 
-                if !success && sw.isOn {
-                    let alert = UIAlertController(title: "Уведомления отключены", message: "Пожалуйста, разрешите уведомления в настройках устройства", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                if !success && switchControl.isOn {
+                    let alert = UIAlertController(title: L10n.settingsNotificationsOffTitle, message: L10n.settingsNotificationsOffMessage, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: L10n.okAction, style: .default))
                     self?.present(alert, animated: true)
                 }
             }

@@ -37,7 +37,7 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Календарь"
+        title = L10n.calendarTitle
         view.backgroundColor = .systemBackground
         
         calendarView = UICalendarView()
@@ -63,7 +63,8 @@ final class CalendarViewController: UIViewController {
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
             DispatchQueue.main.async {
-                self?.calendarView.reloadDecorations(forDateComponents: Array(self?.viewModel.visibleDates ?? []), animated: true)
+                self?.calendarView.delegate = nil
+                self?.calendarView.delegate = self
             }
         }
     }
@@ -74,8 +75,11 @@ final class CalendarViewController: UIViewController {
 extension CalendarViewController: UICalendarViewDelegate {
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        if viewModel.visibleDates.contains(dateComponents) {
-            return UICalendarView.Decoration.default(color: .systemBlue, size: .medium)
+        guard let date = Calendar.current.date(from: dateComponents) else { return nil }
+        let dayKey = date.dayKey()
+        
+        if viewModel.visibleDates.contains(dayKey) {
+            return UICalendarView.Decoration.default(color: .systemBlue, size: .large)
         }
         return nil
     }
@@ -97,4 +101,3 @@ extension CalendarViewController: UICalendarSelectionSingleDateDelegate {
         return true
     }
 }
-
