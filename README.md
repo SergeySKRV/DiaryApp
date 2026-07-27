@@ -1,5 +1,5 @@
 # DiaryApp
-<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 26" src="https://github.com/user-attachments/assets/81f4cde2-b60b-4f92-bb56-d5b75c9f0991" />
+<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 22 03 55" src="https://github.com/user-attachments/assets/30e57aa0-1d23-4449-8c78-a61d9f7d87e2" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 33" src="https://github.com/user-attachments/assets/066ec0d5-a561-428e-a25d-efa5eecbca33" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 39" src="https://github.com/user-attachments/assets/f5158629-54e2-4c09-aa75-2ed9425a5290" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 50" src="https://github.com/user-attachments/assets/fb7c90c3-52b4-487f-b7c1-e1a2167dcc16" />
