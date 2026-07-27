@@ -46,6 +46,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.setViewControllers([listNavigationController, calendarNavigationController, settingsNavigationController], animated: false)
         
         window.rootViewController = tabBarController
+        
+        let themeRawValue = UserDefaults.standard.integer(forKey: "appTheme")
+        let savedTheme = AppTheme(rawValue: themeRawValue) ?? .system
+        window.overrideUserInterfaceStyle = savedTheme.interfaceStyle
+        
         window.makeKeyAndVisible()
         
         self.window = window

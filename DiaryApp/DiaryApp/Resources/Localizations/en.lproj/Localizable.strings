@@ -59,3 +59,9 @@
 "action.favorite" = "Add to Favorites";
 "action.unfavorite" = "Remove from Favorites";
 "pull.to.refresh" = "Pull to refresh";
+
+/* Theme */
+"settings.theme" = "Appearance";
+"theme.system" = "Auto";
+"theme.light" = "Light";
+"theme.dark" = "Dark";

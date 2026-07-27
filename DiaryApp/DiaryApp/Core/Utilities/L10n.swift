@@ -61,5 +61,11 @@ enum L10n {
     static let actionFavorite = NSLocalizedString("action.favorite", comment: "Add to favorites")
     static let actionUnfavorite = NSLocalizedString("action.unfavorite", comment: "Remove from favorites")
     static let pullToRefresh = NSLocalizedString("pull.to.refresh", comment: "Pull to refresh text")
+    
+    // MARK: - Theme
+    static let settingsTheme = NSLocalizedString("settings.theme", comment: "Theme settings label")
+    static let themeSystem = NSLocalizedString("theme.system", comment: "System theme")
+    static let themeLight = NSLocalizedString("theme.light", comment: "Light theme")
+    static let themeDark = NSLocalizedString("theme.dark", comment: "Dark theme")
 }
 
