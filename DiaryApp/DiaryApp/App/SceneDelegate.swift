@@ -19,17 +19,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let repository = CoreDataDiaryRepository()
 
-        let navigationController = UINavigationController()
-
-        let router = DiaryRouter(navigationController: navigationController, repository: repository)
-
+        let listNavigationController = UINavigationController()
+        let listRouter = DiaryRouter(navigationController: listNavigationController, repository: repository)
         let listViewModel = DiaryListViewModel(repository: repository)
-
-        let listViewController = DiaryListViewController(viewModel: listViewModel, router: router)
-
-        navigationController.setViewControllers([listViewController], animated: false)
+        let listViewController = DiaryListViewController(viewModel: listViewModel, router: listRouter)
+        listNavigationController.setViewControllers([listViewController], animated: false)
         
-        window.rootViewController = navigationController
+        listNavigationController.tabBarItem = UITabBarItem(title: "Список", image: UIImage(systemName: "list.bullet"), selectedImage: UIImage(systemName: "list.bullet.rectangle"))
+        
+        let calendarNavigationController = UINavigationController()
+        let calendarRouter = DiaryRouter(navigationController: calendarNavigationController, repository: repository)
+        let calendarViewModel = CalendarViewModel(repository: repository)
+        let calendarViewController = CalendarViewController(viewModel: calendarViewModel, router: calendarRouter)
+        calendarNavigationController.setViewControllers([calendarViewController], animated: false)
+        
+        calendarNavigationController.tabBarItem = UITabBarItem(title: "Календарь", image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
+        
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([listNavigationController, calendarNavigationController], animated: false)
+        
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         
         self.window = window
