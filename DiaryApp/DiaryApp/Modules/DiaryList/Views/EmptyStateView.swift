@@ -9,9 +9,16 @@ import UIKit
 
 final class EmptyStateView: UIView {
     
+    private let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "book.pages")
+        imageView.tintColor = .systemGray3
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Пока нет записей"
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = .secondaryLabel
         label.textAlignment = .center
@@ -29,14 +36,22 @@ final class EmptyStateView: UIView {
     }
     
     private func setupUI() {
-        addSubview(messageLabel)
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        let stackView = UIStackView(arrangedSubviews: [iconImageView, messageLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.alignment = .center
+        
+        addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            messageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
+            iconImageView.heightAnchor.constraint(equalToConstant: 60),
+            iconImageView.widthAnchor.constraint(equalToConstant: 60)
         ])
     }
     

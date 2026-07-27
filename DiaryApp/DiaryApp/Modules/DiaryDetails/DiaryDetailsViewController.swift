@@ -32,6 +32,15 @@ final class DiaryDetailsViewController: UIViewController {
         return textView
     }()
     
+    private let placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.text = L10n.detailsBodyPlaceholder
+        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        label.textColor = .tertiaryLabel
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private let moodSegmentedControl: UISegmentedControl = {
         let items = MoodType.allCases.map { $0.localizedName }
         let segmentedControl = UISegmentedControl(items: items)
@@ -79,10 +88,12 @@ final class DiaryDetailsViewController: UIViewController {
         view.addSubview(titleTextField)
         view.addSubview(bodyTextView)
         view.addSubview(moodSegmentedControl)
+        view.addSubview(placeholderLabel)
         
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         bodyTextView.translatesAutoresizingMaskIntoConstraints = false
         moodSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -96,7 +107,11 @@ final class DiaryDetailsViewController: UIViewController {
             bodyTextView.topAnchor.constraint(equalTo: moodSegmentedControl.bottomAnchor, constant: 16),
             bodyTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             bodyTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            bodyTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            bodyTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            placeholderLabel.topAnchor.constraint(equalTo: bodyTextView.topAnchor, constant: 8),
+            placeholderLabel.leadingAnchor.constraint(equalTo: bodyTextView.leadingAnchor, constant: 5),
+            placeholderLabel.trailingAnchor.constraint(equalTo: bodyTextView.trailingAnchor, constant: -5)
         ])
     }
     
@@ -113,6 +128,11 @@ final class DiaryDetailsViewController: UIViewController {
             bodyTextView.text = ""
             bodyTextView.becomeFirstResponder()
         }
+        updatePlaceholderVisibility()
+    }
+    
+    private func updatePlaceholderVisibility() {
+        placeholderLabel.isHidden = !bodyTextView.text.isEmpty
     }
     
     // MARK: - Keyboard Handling
@@ -175,5 +195,6 @@ extension DiaryDetailsViewController: UITextFieldDelegate {
 
 extension DiaryDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
+        updatePlaceholderVisibility()
     }
 }
