@@ -53,7 +53,7 @@ final class DiaryListViewController: UIViewController {
     // MARK: - Setup
     
     private func setupUI() {
-        title = "Дневник"
+        title = L10n.diaryTitle
         view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -96,7 +96,7 @@ final class DiaryListViewController: UIViewController {
     private func setupSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Поиск по заголовку и тексту"
+        searchController.searchBar.placeholder = L10n.searchPlaceholder
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -119,11 +119,11 @@ final class DiaryListViewController: UIViewController {
         
         if isEmpty {
             if viewModel.isSearching {
-                emptyStateView.updateText("Ничего не найдено. \nПопробуйте изменить запрос.")
+                emptyStateView.updateText(L10n.emptyNoSearchResults)
             } else if viewModel.isShowingFavoritesOnly {
-                emptyStateView.updateText("Нет избранных записей. \nОтметьте записи звездочкой.")
+                emptyStateView.updateText(L10n.emptyNoFavorites)
             } else {
-                emptyStateView.updateText("Пока нет записей. \nНажмите+, чтобы добавить первую!")
+                emptyStateView.updateText(L10n.emptyNoEntries)
             }
         }
     }

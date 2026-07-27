@@ -28,8 +28,8 @@ final class NotificationService {
         cancelReminder()
         
         let content = UNMutableNotificationContent()
-        content.title = "Дневник"
-        content.body = "Время сделать запись в дневнике!"
+        content.title = L10n.notificationTitle
+        content.body = L10n.notificationBody
         content.sound = .default
         
         let components = Calendar.current.dateComponents([.hour, .minute], from: time)

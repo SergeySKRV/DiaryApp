@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  DiaryApp
+
+  Created by Сергей Скориков on 22.07.2026.
+  
+*/
+
+/* Tabs */
+"tab.list" = "List";
+"tab.calendar" = "Calendar";
+"tab.settings" = "Settings";
+
+/* Diary List */
+"diary.title" = "Diary";
+"diary.search.placeholder" = "Search by title and text";
+"diary.empty.noEntries" = "No entries yet.\nPress + to add the first one.";
+"diary.empty.noSearchResults" = "Nothing found.\nTry changing the query.";
+"diary.empty.noFavorites" = "No favorite entries.\nMark entries with a star.";
+"diary.untitled" = "(No title)";
+
+/* Diary Details */
+"details.title.placeholder" = "Title";
+"details.edit.title" = "Edit";
+"details.create.title" = "New Entry";
+"details.error.title" = "Error";
+"details.empty.error" = "Entry cannot be empty";
+"action.ok" = "OK";
+
+/* Calendar */
+"calendar.title" = "Calendar";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.reminders" = "Daily reminders";
+"settings.notifications.off.title" = "Notifications disabled";
+"settings.notifications.off.message" = "Please allow notifications in device settings";
+
+/* Notifications */
+"notification.title" = "Diary";
+"notification.body" = "Time to write in your diary!";

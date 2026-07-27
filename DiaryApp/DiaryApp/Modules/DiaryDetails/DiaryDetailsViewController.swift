@@ -18,7 +18,7 @@ final class DiaryDetailsViewController: UIViewController {
     private let titleTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        textField.placeholder = "Заголовок"
+        textField.placeholder = L10n.detailsTitlePlaceholder
         textField.borderStyle = .none
         textField.returnKeyType = .next
         return textField
@@ -102,14 +102,14 @@ final class DiaryDetailsViewController: UIViewController {
     
     private func configureView() {
         if let entry = viewModel.existingEntry {
-            title = "Редактировать"
+            title = L10n.detailsEditTitle
             titleTextField.text = entry.title
             bodyTextView.text = entry.text
             if let mood = entry.mood, let index = MoodType.allCases.firstIndex(of: mood) {
                 moodSegmentedControl.selectedSegmentIndex = index
             }
         } else {
-            title = "Новая запись"
+            title = L10n.detailsCreateTitle
             bodyTextView.text = ""
             bodyTextView.becomeFirstResponder()
         }
@@ -153,9 +153,9 @@ final class DiaryDetailsViewController: UIViewController {
                 case .success:
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
-                    let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self?.present(alert,animated: true)
+                    let alert = UIAlertController(title: L10n.detailsErrorTitle, message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: L10n.okAction, style: .default, handler: nil))
+                    self?.present(alert, animated: true)
                 }
             }
         }

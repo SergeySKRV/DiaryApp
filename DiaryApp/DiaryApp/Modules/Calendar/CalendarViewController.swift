@@ -37,7 +37,7 @@ final class CalendarViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Календарь"
+        title = L10n.calendarTitle
         view.backgroundColor = .systemBackground
         
         calendarView = UICalendarView()

@@ -87,7 +87,7 @@ final class DiaryEntryCell: UITableViewCell {
     // MARK: - Configure
     
     func configure(with model: DiaryEntryModel) {
-        titleLabel.text = model.title.isEmpty ? "(Без заголовка)" : model.title
+        titleLabel.text = model.title.isEmpty ? L10n.untitled : model.title
         previewLabel.text = model.text
         
         let dateFormatter = DateFormatter()

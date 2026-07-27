@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let listViewController = DiaryListViewController(viewModel: listViewModel, router: listRouter)
         listNavigationController.setViewControllers([listViewController], animated: false)
         
-        listNavigationController.tabBarItem = UITabBarItem(title: "Список", image: UIImage(systemName: "list.bullet"), selectedImage: UIImage(systemName: "list.bullet.rectangle"))
+        listNavigationController.tabBarItem = UITabBarItem(title: L10n.tabList, image: UIImage(systemName: "list.bullet"), selectedImage: UIImage(systemName: "list.bullet.rectangle"))
         
         let calendarNavigationController = UINavigationController()
         let calendarRouter = DiaryRouter(navigationController: calendarNavigationController, repository: repository)
@@ -33,14 +33,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let calendarViewController = CalendarViewController(viewModel: calendarViewModel, router: calendarRouter)
         calendarNavigationController.setViewControllers([calendarViewController], animated: false)
         
-        calendarNavigationController.tabBarItem = UITabBarItem(title: "Календарь", image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
+        calendarNavigationController.tabBarItem = UITabBarItem(title: L10n.tabCalendar, image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
         
         let settingsNavigationController = UINavigationController()
         let settingsViewModel = SettingsViewModel()
         let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
         settingsNavigationController.setViewControllers([settingsViewController], animated: false)
         
-        settingsNavigationController.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.circle.fill"))
+        settingsNavigationController.tabBarItem = UITabBarItem(title: L10n.tabSettings, image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.circle.fill"))
         
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers([listNavigationController, calendarNavigationController, settingsNavigationController], animated: false)
