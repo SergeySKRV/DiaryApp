@@ -16,12 +16,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        
+
         let repository = CoreDataDiaryRepository()
-        let viewModel = DiaryListViewModel(repository: repository)
-        let viewController = DiaryListViewController(viewModel: viewModel)
-        
-        let navigationController = UINavigationController(rootViewController: viewController)
+
+        let navigationController = UINavigationController()
+
+        let router = DiaryRouter(navigationController: navigationController, repository: repository)
+
+        let listViewModel = DiaryListViewModel(repository: repository)
+
+        let listViewController = DiaryListViewController(viewModel: listViewModel, router: router)
+
+        navigationController.setViewControllers([listViewController], animated: false)
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
