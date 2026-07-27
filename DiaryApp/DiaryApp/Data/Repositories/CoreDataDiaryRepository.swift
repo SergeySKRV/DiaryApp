@@ -43,7 +43,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
         coreDataStack.performBackgroundTask { context in
             do {
                 let fetchRequest = DiaryEntry.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "dayKey == %@, dayKey")
+                fetchRequest.predicate = NSPredicate(format: "dayKey == %@", dayKey)
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
                 
                 let entities = try context.fetch(fetchRequest)
