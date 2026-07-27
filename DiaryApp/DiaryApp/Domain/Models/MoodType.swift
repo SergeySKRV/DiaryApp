@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// Represents the user's mood attached to a diary entry.
 enum MoodType: String, CaseIterable {
     case happy
