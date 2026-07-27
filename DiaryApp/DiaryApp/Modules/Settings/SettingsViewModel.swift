@@ -33,6 +33,20 @@ final class SettingsViewModel {
         }
     }
     
+    var selectedTheme: AppTheme {
+        get {
+            let rawValue = UserDefaults.standard.integer(forKey: "appTheme")
+            return AppTheme(rawValue: rawValue) ?? .system
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "appTheme")
+        }
+    }
+    
+    func updateTheme(_ theme: AppTheme) {
+        selectedTheme = theme
+    }
+    
     func toggleReminders(enabled: Bool, completion: @escaping (Bool) -> Void) {
         if enabled {
             notificationService.requestAuthorization { [weak self] granted in

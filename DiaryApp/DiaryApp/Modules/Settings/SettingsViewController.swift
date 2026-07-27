@@ -13,11 +13,25 @@ final class SettingsViewController: UIViewController {
     
     private let reminderSwitch = UISwitch()
     private let timePicker = UIDatePicker()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.settingsReminders
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         return label
+    }()
+    
+    private let themeTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = L10n.settingsTheme
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        return label
+    }()
+    
+    private let themeSegmentedControl: UISegmentedControl = {
+        let items = AppTheme.allCases.map { $0.localizedName }
+        let segmentedControl = UISegmentedControl(items: items)
+        return segmentedControl
     }()
     
     init(viewModel: SettingsViewModel) {
@@ -45,24 +59,33 @@ final class SettingsViewController: UIViewController {
         timePicker.locale = Locale.current
         timePicker.addTarget(self, action: #selector(timeChanged(_:)), for: .valueChanged)
         
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, reminderSwitch])
-        stackView.axis = .horizontal
-        stackView.spacing = 12
-        stackView.alignment = .center
+        themeSegmentedControl.addTarget(self, action: #selector(themeChanged(_:)), for: .valueChanged)
         
-        view.addSubview(stackView)
-        view.addSubview(timePicker)
+        let reminderStackView = UIStackView(arrangedSubviews: [titleLabel, reminderSwitch])
+        reminderStackView.axis = .horizontal
+        reminderStackView.spacing = 12
+        reminderStackView.alignment = .center
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        timePicker.translatesAutoresizingMaskIntoConstraints = false
+        let themeStackView = UIStackView(arrangedSubviews: [themeTitleLabel, themeSegmentedControl])
+        themeStackView.axis = .horizontal
+        themeStackView.spacing = 12
+        themeStackView.alignment = .center
+        
+        let mainStackView = UIStackView(arrangedSubviews: [reminderStackView, timePicker, themeStackView])
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 24
+        mainStackView.alignment = .center
+        
+        view.addSubview(mainStackView)
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            timePicker.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
-            timePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            reminderStackView.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
+            themeStackView.widthAnchor.constraint(equalTo: mainStackView.widthAnchor)
         ])
     }
     
@@ -71,6 +94,8 @@ final class SettingsViewController: UIViewController {
         timePicker.date = viewModel.reminderTime
         timePicker.isEnabled = viewModel.isRemindersEnabled
         timePicker.alpha = viewModel.isRemindersEnabled ? 1.0 : 0.5
+        
+        themeSegmentedControl.selectedSegmentIndex = viewModel.selectedTheme.rawValue
     }
     
     @objc private func switchToggled(_ switchControl: UISwitch) {
@@ -91,5 +116,14 @@ final class SettingsViewController: UIViewController {
     
     @objc private func timeChanged(_ picker: UIDatePicker) {
         viewModel.updateReminderTime(picker.date)
+    }
+    
+    @objc private func themeChanged(_ segmentedControl: UISegmentedControl) {
+        guard let theme = AppTheme(rawValue: segmentedControl.selectedSegmentIndex) else { return }
+        viewModel.updateTheme(theme)
+        
+        if let window = view.window {
+            window.overrideUserInterfaceStyle = theme.interfaceStyle
+        }
     }
 }

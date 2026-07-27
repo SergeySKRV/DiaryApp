@@ -59,3 +59,9 @@
 "action.favorite" = "В избранное";
 "action.unfavorite" = "Убрать из избранного";
 "pull.to.refresh" = "Потяните для обновления";
+
+/* Theme */
+"settings.theme" = "Оформление";
+"theme.system" = "Авто";
+"theme.light" = "Светлая";
+"theme.dark" = "Темная";
