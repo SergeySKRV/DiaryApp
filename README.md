@@ -2,7 +2,7 @@
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 22 03 55" src="https://github.com/user-attachments/assets/30e57aa0-1d23-4449-8c78-a61d9f7d87e2" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 23 43 25" src="https://github.com/user-attachments/assets/b0c0ab9c-604a-437c-8981-69dfc7bac6fe" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 33" src="https://github.com/user-attachments/assets/066ec0d5-a561-428e-a25d-efa5eecbca33" />
-<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 39" src="https://github.com/user-attachments/assets/f5158629-54e2-4c09-aa75-2ed9425a5290" />
+<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 00 09 56" src="https://github.com/user-attachments/assets/f8d5996b-0e76-475a-8121-26219b41dba4" />
 
 DiaryApp — это учебно-портфельное iPhone-приложение дневника на UIKit, в котором можно создавать, редактировать, искать и просматривать личные записи по датам.
 
@@ -11,11 +11,14 @@ DiaryApp — это учебно-портфельное iPhone-приложен�
 - 📅 Просмотр записей списком и через встроенный календарь (`UICalendarView`)
 - 🔍 Поиск по заголовку и тексту (с debounce 300мс)
 - ⭐ Избранные записи (свайп влево для добавления в избранное)
-- 🎭 Выбор настроения для каждой записи
+- 🗑️ Удаление записей (через свайп или контекстное меню по долгому тапу)
+- 🎭 Выбор настроения для каждой записи + отображение эмодзи в списке
 - 🔔 Локальные напоминания о ведении дневника (`UNUserNotificationCenter`)
+- 🌙 Ручное переключение темы (Светлая / Темная / Авто)
+- 📳 Тактильная отдача (Haptic Feedback) при действиях
+- ⬇️ Pull-to-Refresh (потянуть вниз для обновления) на главном экране
 - 🌍 Локализация интерфейса (Русский / Английский)
 - ♿ Поддержка VoiceOver (Accessibility)
-- 🌙 Полная поддержка темной темы (Dark Mode)
 
 ## Технологии
 - **Язык:** Swift
