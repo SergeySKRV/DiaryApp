@@ -24,4 +24,14 @@ enum MoodType: String, CaseIterable {
         case .angry: return L10n.moodAngry
         }
     }
-}
+    
+            var emoji: String {
+                switch self {
+                case .happy: return "😄"
+                case .calm: return "😌"
+                case .neutral: return "😑"
+                case .sad: return "😔"
+                case .angry: return "😡"
+                }
+            }
+        }

@@ -13,6 +13,13 @@ final class DiaryEntryCell: UITableViewCell {
     
     // MARK: - UI Elements
     
+    private let moodLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 28)
+        label.textAlignment = .center
+        return label
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -62,7 +69,7 @@ final class DiaryEntryCell: UITableViewCell {
         textStackView.axis = .vertical
         textStackView.spacing = 4
         
-        let mainStackView = UIStackView(arrangedSubviews: [textStackView, favoriteImageView, dateLabel])
+        let mainStackView = UIStackView(arrangedSubviews: [moodLabel, textStackView, favoriteImageView, dateLabel])
         mainStackView.axis = .horizontal
         mainStackView.spacing = 12
         mainStackView.alignment = .top
@@ -70,6 +77,7 @@ final class DiaryEntryCell: UITableViewCell {
         contentView.addSubview(mainStackView)
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
+        moodLabel.setContentHuggingPriority(.required, for: .horizontal)
         favoriteImageView.setContentHuggingPriority(.required, for: .horizontal)
         dateLabel.setContentHuggingPriority(.required, for: .horizontal)
         
@@ -79,6 +87,7 @@ final class DiaryEntryCell: UITableViewCell {
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
+            moodLabel.widthAnchor.constraint(equalToConstant: 32),
             favoriteImageView.widthAnchor.constraint(equalToConstant: 20),
             favoriteImageView.heightAnchor.constraint(equalToConstant: 20)
         ])
@@ -95,11 +104,14 @@ final class DiaryEntryCell: UITableViewCell {
         dateFormatter.timeStyle = .short
         dateLabel.text = dateFormatter.string(from: model.createdAt)
         
+        moodLabel.text = model.mood?.emoji ?? ""
+        
         let imageName = model.isFavorite ? "star.fill" : "star"
         favoriteImageView.image = UIImage(systemName: imageName)
         
         // Accessibility (VoiceOver)
         isAccessibilityElement = true
+        let moodText = model.mood?.localizedName ?? L10n.moodNone
         accessibilityLabel = String(format: L10n.accessibilityEntryLabel, titleLabel.text ?? "", dateLabel.text ?? "")
         accessibilityHint = L10n.accessibilityEntryHint
         accessibilityTraits = .button

@@ -48,6 +48,7 @@ enum L10n {
     static let moodNeutral = NSLocalizedString("mood.neutral", comment: "Neutral mood")
     static let moodSad = NSLocalizedString("mood.sad", comment: "Sad mood")
     static let moodAngry = NSLocalizedString("mood.angry", comment: "Angry mood")
+    static let moodNone = NSLocalizedString("mood.none", comment: "No mood selected")
     
     // MARK: - UI Polish
     static let detailsBodyPlaceholder = NSLocalizedString("details.body.placeholder", comment: "Placeholder for body text view")

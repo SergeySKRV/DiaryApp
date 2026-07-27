@@ -46,6 +46,7 @@
 "mood.neutral" = "Neutral";
 "mood.sad" = "Sad";
 "mood.angry" = "Angry";
+"mood.none" = "No mood";
 
 /* UI Polish */
 "details.body.placeholder" = "Start writing here...";

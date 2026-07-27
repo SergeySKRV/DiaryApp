@@ -46,6 +46,7 @@
 "mood.neutral" = "Нейтральное";
 "mood.sad" = "Грустное";
 "mood.angry" = "Злое";
+"mood.none" = "Без настроения";
 
 /* UI Polish */
 "details.body.placeholder" = "Начните писать здесь...";
