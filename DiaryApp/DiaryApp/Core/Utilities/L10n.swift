@@ -48,5 +48,10 @@ enum L10n {
     static let moodNeutral = NSLocalizedString("mood.neutral", comment: "Neutral mood")
     static let moodSad = NSLocalizedString("mood.sad", comment: "Sad mood")
     static let moodAngry = NSLocalizedString("mood.angry", comment: "Angry mood")
+    
+    // MARK: - UI Polish
+    static let detailsBodyPlaceholder = NSLocalizedString("details.body.placeholder", comment: "Placeholder for body text view")
+    static let accessibilityEntryLabel = NSLocalizedString("accessibility.entry.label", comment: "VoiceOver label for diary entry")
+    static let accessibilityEntryHint = NSLocalizedString("accessibility.entry.hint", comment: "VoiceOver hint for diary entry")
 }
 

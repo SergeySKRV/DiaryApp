@@ -46,3 +46,8 @@
 "mood.neutral" = "Neutral";
 "mood.sad" = "Sad";
 "mood.angry" = "Angry";
+
+/* UI Polish */
+"details.body.placeholder" = "Start writing here...";
+"accessibility.entry.label" = "Entry: %@, created on %@";
+"accessibility.entry.hint" = "Double tap to edit";

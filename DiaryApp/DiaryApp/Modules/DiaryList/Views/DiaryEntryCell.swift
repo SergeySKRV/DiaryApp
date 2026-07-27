@@ -97,5 +97,11 @@ final class DiaryEntryCell: UITableViewCell {
         
         let imageName = model.isFavorite ? "star.fill" : "star"
         favoriteImageView.image = UIImage(systemName: imageName)
+        
+        // Accessibility (VoiceOver)
+        isAccessibilityElement = true
+        accessibilityLabel = String(format: L10n.accessibilityEntryLabel, titleLabel.text ?? "", dateLabel.text ?? "")
+        accessibilityHint = L10n.accessibilityEntryHint
+        accessibilityTraits = .button
     }
 }

@@ -46,3 +46,8 @@
 "mood.neutral" = "Нейтральное";
 "mood.sad" = "Грустное";
 "mood.angry" = "Злое";
+
+/* UI Polish */
+"details.body.placeholder" = "Начните писать здесь...";
+"accessibility.entry.label" = "Запись: %@, создана %@";
+"accessibility.entry.hint" = "Двойной тап для редактирования";
