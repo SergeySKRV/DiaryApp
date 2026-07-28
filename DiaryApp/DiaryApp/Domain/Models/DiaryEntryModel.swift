@@ -17,4 +17,5 @@ struct DiaryEntryModel: Equatable {
     let isFavorite: Bool
     let mood: MoodType?
     let dayKey: String
+    let imageData: Data?
 }

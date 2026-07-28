@@ -1,15 +1,13 @@
-/* 
-  Localizable.strings
-  DiaryApp
-
-  Created by Сергей Скориков on 22.07.2026.
-  
+/* Localizable.strings
+   DiaryApp
+   Created by Сергей Скориков on 22.07.2026.
 */
 
 /* Tabs */
 "tab.list" = "List";
 "tab.calendar" = "Calendar";
 "tab.settings" = "Settings";
+"tab.chart" = "Mood";
 
 /* Diary List */
 "diary.title" = "Diary";
@@ -18,27 +16,26 @@
 "diary.empty.noSearchResults" = "Nothing found.\nTry changing the query.";
 "diary.empty.noFavorites" = "No favorite entries.\nMark entries with a star.";
 "diary.untitled" = "(No title)";
+"pull.to.refresh" = "Pull to refresh";
 
 /* Diary Details */
 "details.title.placeholder" = "Title";
+"details.body.placeholder" = "Start writing here...";
 "details.edit.title" = "Edit";
 "details.create.title" = "New Entry";
 "details.error.title" = "Error";
 "details.empty.error" = "Entry cannot be empty";
-"action.ok" = "OK";
+"details.add.photo" = "Add Photo";
+"details.change.photo" = "Change Photo";
 
 /* Calendar */
 "calendar.title" = "Calendar";
 
-/* Settings */
-"settings.title" = "Settings";
-"settings.reminders" = "Daily reminders";
-"settings.notifications.off.title" = "Notifications disabled";
-"settings.notifications.off.message" = "Please allow notifications in device settings";
-
-/* Notifications */
-"notification.title" = "Diary";
-"notification.body" = "Time to write in your diary!";
+/* Mood Chart */
+"mood.chart.title" = "Mood Tracker";
+"mood.chart.empty" = "Not enough data yet.\nAdd moods to your entries to see the graph.";
+"chart.axis.date" = "Date";
+"chart.axis.mood" = "Mood";
 
 /* Moods */
 "mood.happy" = "Happy";
@@ -48,29 +45,29 @@
 "mood.angry" = "Angry";
 "mood.none" = "No mood";
 
-/* UI Polish */
-"details.body.placeholder" = "Start writing here...";
-"accessibility.entry.label" = "Entry: %@, created on %@";
-"accessibility.entry.hint" = "Double tap to edit";
-
-/* UX Improvements */
-"action.edit" = "Edit";
-"action.delete" = "Delete";
-"action.favorite" = "Add to Favorites";
-"action.unfavorite" = "Remove from Favorites";
-"pull.to.refresh" = "Pull to refresh";
-
-/* Theme */
+/* Settings */
+"settings.title" = "Settings";
+"settings.reminders" = "Daily reminders";
+"settings.notifications.off.title" = "Notifications disabled";
+"settings.notifications.off.message" = "Please allow notifications in device settings";
 "settings.theme" = "Appearance";
 "theme.system" = "Auto";
 "theme.light" = "Light";
 "theme.dark" = "Dark";
 
-/* Mood Chart */
-"tab.chart" = "Mood";
-"mood.chart.title" = "Mood Tracker";
-"mood.chart.empty" = "Not enough data yet.\nAdd moods to your entries to see the graph.";
+/* Notifications */
+"notification.title" = "Diary";
+"notification.body" = "Time to write in your diary!";
 
-/* Mood Chart Axis */
-"chart.axis.date" = "Date";
-"chart.axis.mood" = "Mood";
+/* Actions */
+"action.ok" = "OK";
+"action.edit" = "Edit";
+"action.delete" = "Delete";
+"action.favorite" = "Add to Favorites";
+"action.unfavorite" = "Remove from Favorites";
+
+/* Accessibility */
+"accessibility.entry.hint" = "Double tap to edit";
+"accessibility.entry.label.format" = "Entry: %@, %@, %@, created on %@";
+"accessibility.with.photo" = "with photo";
+"accessibility.without.photo" = "without photo";

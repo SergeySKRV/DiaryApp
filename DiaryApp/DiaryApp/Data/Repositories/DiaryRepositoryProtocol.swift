@@ -16,9 +16,10 @@ protocol DiaryRepositoryProtocol {
         title: String,
         text: String,
         mood: MoodType?,
+        imageData: Data?,
         completion: @escaping (Result<Void, Error>) -> Void
     )
-    func update(_ entry: DiaryEntryModel, completion: @escaping (Result<Void, Error>) -> Void)
+    func update(_ entry: DiaryEntryModel, imageData: Data?, completion: @escaping (Result<Void, Error>) -> Void)
     func toggleFavorite(id: UUID, completion: @escaping (Result<Void, Error>) -> Void)
     func delete(id: UUID, completion: @escaping (Result<Void, Error>) -> Void)
 }
