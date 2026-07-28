@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class DiaryDetailsViewController: UIViewController {
     
@@ -16,40 +17,53 @@ final class DiaryDetailsViewController: UIViewController {
     // MARK: - UI Elements
     
     private let titleTextField: UITextField = {
-        let textField = UITextField()
-        textField.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        textField.placeholder = L10n.detailsTitlePlaceholder
-        textField.borderStyle = .none
-        textField.returnKeyType = .next
-        return textField
+        let titleTextField = UITextField()
+        titleTextField.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        titleTextField.placeholder = L10n.detailsTitlePlaceholder
+        titleTextField.borderStyle = .none
+        titleTextField.returnKeyType = .next
+        return titleTextField
     }()
     
     private let bodyTextView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textView.backgroundColor = .clear
-        textView.isScrollEnabled = true
-        return textView
+        let bodyTextView = UITextView()
+        bodyTextView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        bodyTextView.backgroundColor = .clear
+        bodyTextView.isScrollEnabled = true
+        return bodyTextView
     }()
     
     private let placeholderLabel: UILabel = {
-        let label = UILabel()
-        label.text = L10n.detailsBodyPlaceholder
-        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        label.textColor = .tertiaryLabel
-        label.numberOfLines = 0
-        return label
+        let placeholderLabel = UILabel()
+        placeholderLabel.text = L10n.detailsBodyPlaceholder
+        placeholderLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        placeholderLabel.textColor = .tertiaryLabel
+        placeholderLabel.numberOfLines = 0
+        return placeholderLabel
     }()
     
     private let moodSegmentedControl: UISegmentedControl = {
         let items = MoodType.allCases.map { $0.localizedName }
-        let segmentedControl = UISegmentedControl(items: items)
-        segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
-        
-        segmentedControl.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 10, weight: .medium)], for: .normal)
-        segmentedControl.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 10, weight: .bold)], for: .selected)
-        
-        return segmentedControl
+        let moodSegmentedControl = UISegmentedControl(items: items)
+        moodSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+        return moodSegmentedControl
+    }()
+    
+    private let photoImageView: UIImageView = {
+        let photoImageView = UIImageView()
+        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
+        photoImageView.backgroundColor = .secondarySystemBackground
+        photoImageView.layer.cornerRadius = 12
+        photoImageView.isUserInteractionEnabled = true
+        return photoImageView
+    }()
+    
+    private let addPhotoButton: UIButton = {
+        let addPhotoButton = UIButton(type: .system)
+        addPhotoButton.setTitle(L10n.detailsAddPhoto, for: .normal)
+        addPhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        return addPhotoButton
     }()
     
     // MARK: - Init
@@ -89,14 +103,22 @@ final class DiaryDetailsViewController: UIViewController {
         titleTextField.delegate = self
         bodyTextView.delegate = self
         
+        addPhotoButton.addTarget(self, action: #selector(didTapAddPhoto), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddPhoto))
+        photoImageView.addGestureRecognizer(tapGesture)
+        
         view.addSubview(titleTextField)
-        view.addSubview(bodyTextView)
         view.addSubview(moodSegmentedControl)
+        view.addSubview(photoImageView)
+        view.addSubview(addPhotoButton)
+        view.addSubview(bodyTextView)
         view.addSubview(placeholderLabel)
         
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
-        bodyTextView.translatesAutoresizingMaskIntoConstraints = false
         moodSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        photoImageView.translatesAutoresizingMaskIntoConstraints = false
+        addPhotoButton.translatesAutoresizingMaskIntoConstraints = false
+        bodyTextView.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -107,8 +129,16 @@ final class DiaryDetailsViewController: UIViewController {
             moodSegmentedControl.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16),
             moodSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             moodSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            photoImageView.topAnchor.constraint(equalTo: moodSegmentedControl.bottomAnchor, constant: 16),
+            photoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            photoImageView.widthAnchor.constraint(equalToConstant: 150),
+            photoImageView.heightAnchor.constraint(equalToConstant: 150),
             
-            bodyTextView.topAnchor.constraint(equalTo: moodSegmentedControl.bottomAnchor, constant: 16),
+            addPhotoButton.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 8),
+            addPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            bodyTextView.topAnchor.constraint(equalTo: addPhotoButton.bottomAnchor, constant: 16),
             bodyTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             bodyTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             bodyTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
@@ -126,6 +156,10 @@ final class DiaryDetailsViewController: UIViewController {
             bodyTextView.text = entry.text
             if let mood = entry.mood, let index = MoodType.allCases.firstIndex(of: mood) {
                 moodSegmentedControl.selectedSegmentIndex = index
+            }
+            if let imageData = entry.imageData {
+                photoImageView.image = UIImage(data: imageData)
+                addPhotoButton.setTitle(L10n.detailsChangePhoto, for: .normal)
             }
         } else {
             title = L10n.detailsCreateTitle
@@ -186,6 +220,17 @@ final class DiaryDetailsViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func didTapAddPhoto() {
+        HapticManager.shared.impactLight()
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1
+        
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        pickerViewController.delegate = self
+        present(pickerViewController, animated: true)
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -202,5 +247,27 @@ extension DiaryDetailsViewController: UITextFieldDelegate {
 extension DiaryDetailsViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         updatePlaceholderVisibility()
+    }
+}
+
+// MARK: - PHPickerViewControllerDelegate
+
+extension DiaryDetailsViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        guard let itemProvider = results.first?.itemProvider else { return }
+        
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
+                DispatchQueue.main.async {
+                    if let selectedImage = image as? UIImage {
+                        self?.photoImageView.image = selectedImage
+                        self?.viewModel.currentImageData = selectedImage.jpegData(compressionQuality: 0.7)
+                        self?.addPhotoButton.setTitle(L10n.detailsChangePhoto, for: .normal)
+                    }
+                }
+            }
+        }
     }
 }

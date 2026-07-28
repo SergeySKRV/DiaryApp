@@ -14,39 +14,48 @@ final class DiaryEntryCell: UITableViewCell {
     // MARK: - UI Elements
     
     private let moodLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 28)
-        label.textAlignment = .center
-        return label
+        let moodLabel = UILabel()
+        moodLabel.font = UIFont.systemFont(ofSize: 28)
+        moodLabel.textAlignment = .center
+        return moodLabel
     }()
     
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.textColor = .label
-        return label
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        titleLabel.textColor = .label
+        return titleLabel
     }()
     
     private let dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = .secondaryLabel
-        return label
+        let dateLabel = UILabel()
+        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        dateLabel.textColor = .secondaryLabel
+        return dateLabel
     }()
     
     private let previewLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .secondaryLabel
-        label.numberOfLines = 2
-        return label
+        let previewLabel = UILabel()
+        previewLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        previewLabel.textColor = .secondaryLabel
+        previewLabel.numberOfLines = 2
+        return previewLabel
+    }()
+    
+    private let thumbnailImageView: UIImageView = {
+        let thumbnailImageView = UIImageView()
+        thumbnailImageView.contentMode = .scaleAspectFill
+        thumbnailImageView.clipsToBounds = true
+        thumbnailImageView.layer.cornerRadius = 8
+        thumbnailImageView.backgroundColor = .secondarySystemBackground
+        return thumbnailImageView
     }()
     
     private let favoriteImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .systemYellow
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+        let favoriteImageView = UIImageView()
+        favoriteImageView.tintColor = .systemYellow
+        favoriteImageView.contentMode = .scaleAspectFit
+        return favoriteImageView
     }()
     
     // MARK: - Init
@@ -69,7 +78,7 @@ final class DiaryEntryCell: UITableViewCell {
         textStackView.axis = .vertical
         textStackView.spacing = 4
         
-        let mainStackView = UIStackView(arrangedSubviews: [moodLabel, textStackView, favoriteImageView, dateLabel])
+        let mainStackView = UIStackView(arrangedSubviews: [moodLabel, textStackView, thumbnailImageView, favoriteImageView, dateLabel])
         mainStackView.axis = .horizontal
         mainStackView.spacing = 12
         mainStackView.alignment = .top
@@ -78,6 +87,7 @@ final class DiaryEntryCell: UITableViewCell {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         moodLabel.setContentHuggingPriority(.required, for: .horizontal)
+        thumbnailImageView.setContentHuggingPriority(.required, for: .horizontal)
         favoriteImageView.setContentHuggingPriority(.required, for: .horizontal)
         dateLabel.setContentHuggingPriority(.required, for: .horizontal)
         
@@ -88,6 +98,8 @@ final class DiaryEntryCell: UITableViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             moodLabel.widthAnchor.constraint(equalToConstant: 32),
+            thumbnailImageView.widthAnchor.constraint(equalToConstant: 50),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: 50),
             favoriteImageView.widthAnchor.constraint(equalToConstant: 20),
             favoriteImageView.heightAnchor.constraint(equalToConstant: 20)
         ])
@@ -106,13 +118,21 @@ final class DiaryEntryCell: UITableViewCell {
         
         moodLabel.text = model.mood?.emoji ?? ""
         
+        if let imageData = model.imageData, let image = UIImage(data: imageData) {
+            thumbnailImageView.image = image
+            thumbnailImageView.isHidden = false
+        } else {
+            thumbnailImageView.image = nil
+            thumbnailImageView.isHidden = true
+        }
+        
         let imageName = model.isFavorite ? "star.fill" : "star"
         favoriteImageView.image = UIImage(systemName: imageName)
         
-        // Accessibility (VoiceOver)
         isAccessibilityElement = true
-        _ = model.mood?.localizedName ?? L10n.moodNone
-        accessibilityLabel = String(format: L10n.accessibilityEntryLabel, titleLabel.text ?? "", dateLabel.text ?? "")
+        let moodText = model.mood?.localizedName ?? L10n.moodNone
+        let hasPhotoText = model.imageData != nil ? L10n.accessibilityWithPhoto : L10n.accessibilityWithoutPhoto
+        accessibilityLabel = String(format: L10n.accessibilityEntryLabelFormat, titleLabel.text ?? "", moodText, hasPhotoText, dateLabel.text ?? "")
         accessibilityHint = L10n.accessibilityEntryHint
         accessibilityTraits = .button
     }

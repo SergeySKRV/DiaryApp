@@ -89,6 +89,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
         title: String,
         text: String,
         mood: MoodType?,
+        imageData: Data?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         coreDataStack.performBackgroundTask { context in
@@ -101,6 +102,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
             entry.isFavorite = false
             entry.moodRawValue = mood?.rawValue
             entry.dayKey = Date().dayKey()
+            entry.imageData = imageData
             
             do {
                 try context.save()
@@ -117,7 +119,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
     
     // MARK: - Update
     
-    func update(_ entry: DiaryEntryModel, completion: @escaping (Result<Void, Error>) -> Void) {
+    func update(_ entry: DiaryEntryModel, imageData: Data?, completion: @escaping (Result<Void, Error>) -> Void) {
         coreDataStack.performBackgroundTask { context in
             let fetchRequest = DiaryEntry.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", entry.id as CVarArg)
@@ -136,6 +138,7 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
                 entity.isFavorite = entry.isFavorite
                 entity.updatedAt = Date()
                 entity.dayKey = entry.createdAt.dayKey()
+                entity.imageData = imageData
                 
                 try context.save()
                 DispatchQueue.main.async {
@@ -230,7 +233,8 @@ final class CoreDataDiaryRepository: DiaryRepositoryProtocol {
             updatedAt: updatedAt,
             isFavorite: entity.isFavorite,
             mood: mood,
-            dayKey: dayKey
+            dayKey: dayKey,
+            imageData: entity.imageData
         )
     }
 }

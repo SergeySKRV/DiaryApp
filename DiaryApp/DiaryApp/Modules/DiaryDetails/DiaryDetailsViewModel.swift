@@ -5,7 +5,7 @@
 //  Created by Сергей Скориков on 16.07.2026.
 //
 
-import Foundation
+import UIKit
 
 final class DiaryDetailsViewModel {
     
@@ -18,9 +18,12 @@ final class DiaryDetailsViewModel {
         existingEntry != nil
     }
     
+    var currentImageData: Data?
+    
     init(repository: DiaryRepositoryProtocol, entry: DiaryEntryModel? = nil) {
         self.repository = repository
         self.existingEntry = entry
+        self.currentImageData = entry?.imageData
     }
     
     func save(title: String, text: String, mood: MoodType?, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -28,7 +31,7 @@ final class DiaryDetailsViewModel {
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !trimmedTitle.isEmpty || !trimmedText.isEmpty else {
-            completion(.failure(NSError(domain: "DiaryDetailsError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Запись не может быть пустой"])))
+            completion(.failure(NSError(domain: "DiaryDetailsError", code: 400, userInfo: [NSLocalizedDescriptionKey: L10n.detailsEmptyError])))
             return
         }
         
@@ -41,16 +44,17 @@ final class DiaryDetailsViewModel {
                 updatedAt: Date(),
                 isFavorite: existingEntry.isFavorite,
                 mood: mood,
-                dayKey: existingEntry.dayKey
+                dayKey: existingEntry.dayKey,
+                imageData: currentImageData
                 )
-            repository.update(updatedEntry) { [weak self] result in
+            repository.update(updatedEntry, imageData: currentImageData) { [weak self] result in
                 if result.isSuccess {
                     self?.onSaved?()
                 }
                 completion(result)
             }
         } else {
-            repository.create(title: trimmedTitle, text: trimmedText, mood: mood) { [weak self] result in
+            repository.create(title: trimmedTitle, text: trimmedText, mood: mood, imageData: currentImageData) { [weak self] result in
                 if result.isSuccess {
                     self?.onSaved?()
                 }

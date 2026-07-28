@@ -4,6 +4,7 @@
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dayKey" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="moodRawValue" optional="YES" attributeType="String"/>
         <attribute name="text" attributeType="String"/>
