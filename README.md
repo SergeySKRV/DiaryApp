@@ -1,6 +1,7 @@
 # DiaryApp
-<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 22 03 55" src="https://github.com/user-attachments/assets/30e57aa0-1d23-4449-8c78-a61d9f7d87e2" />
-<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 23 43 25" src="https://github.com/user-attachments/assets/b0c0ab9c-604a-437c-8981-69dfc7bac6fe" />
+<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 22 47 13" src="https://github.com/user-attachments/assets/a61b6c21-8530-42a3-b540-07501f150cbe" />
+<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 22 47 51" src="https://github.com/user-attachments/assets/2dc86930-73dc-4a96-9bb7-7255927c5500" />
+<img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 22 47 37" src="https://github.com/user-attachments/assets/d19ccbcc-eb22-4072-960a-127a7d313935" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-27 at 21 14 33" src="https://github.com/user-attachments/assets/066ec0d5-a561-428e-a25d-efa5eecbca33" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 00 09 56" src="https://github.com/user-attachments/assets/f8d5996b-0e76-475a-8121-26219b41dba4" />
 <img width="117" height="253" alt="Simulator Screenshot - iPhone13 - 2026-07-28 at 21 37 32" src="https://github.com/user-attachments/assets/4e958e16-4870-4fb3-acb7-105f9350c43b" />
