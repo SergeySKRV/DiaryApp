@@ -41,9 +41,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         settingsNavigationController.setViewControllers([settingsViewController], animated: false)
         
         settingsNavigationController.tabBarItem = UITabBarItem(title: L10n.tabSettings, image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.circle.fill"))
+
+        let moodChartNavigationController = UINavigationController()
+        let moodChartViewModel = MoodChartViewModel(repository: repository)
+        let moodChartViewController = MoodChartViewController(viewModel: moodChartViewModel)
+        moodChartNavigationController.setViewControllers([moodChartViewController], animated: false)
+        moodChartNavigationController.tabBarItem = UITabBarItem(title: L10n.tabChart, image: UIImage(systemName: "chart.xyaxis.line"), selectedImage: UIImage(systemName: "chart.xyaxis.line"))
         
         let tabBarController = UITabBarController()
-        tabBarController.setViewControllers([listNavigationController, calendarNavigationController, settingsNavigationController], animated: false)
+        tabBarController.setViewControllers([listNavigationController, calendarNavigationController, moodChartNavigationController, settingsNavigationController], animated: false)
         
         window.rootViewController = tabBarController
         

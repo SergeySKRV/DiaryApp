@@ -67,5 +67,14 @@ enum L10n {
     static let themeSystem = NSLocalizedString("theme.system", comment: "System theme")
     static let themeLight = NSLocalizedString("theme.light", comment: "Light theme")
     static let themeDark = NSLocalizedString("theme.dark", comment: "Dark theme")
+    
+    // MARK: - Mood Chart
+    static let tabChart = NSLocalizedString("tab.chart", comment: "Tab bar item for chart")
+    static let moodChartTitle = NSLocalizedString("mood.chart.title", comment: "Title for mood chart screen")
+    static let moodChartEmpty = NSLocalizedString("mood.chart.empty", comment: "Empty state for mood chart")
+    
+    // MARK: - Mood Chart Axis
+    static let chartAxisDate = NSLocalizedString("chart.axis.date", comment: "X axis label for chart")
+    static let chartAxisMood = NSLocalizedString("chart.axis.mood", comment: "Y axis label for chart")
 }
 

@@ -65,3 +65,12 @@
 "theme.system" = "Авто";
 "theme.light" = "Светлая";
 "theme.dark" = "Темная";
+
+/* Mood Chart */
+"tab.chart" = "Настроение";
+"mood.chart.title" = "График настроения";
+"mood.chart.empty" = "Пока недостаточно данных.\nДобавьте настроение к записям, чтобы увидеть график.";
+
+/* Mood Chart Axis */
+"chart.axis.date" = "Дата";
+"chart.axis.mood" = "Настроение";
