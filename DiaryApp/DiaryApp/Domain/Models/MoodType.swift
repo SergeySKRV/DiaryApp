@@ -34,4 +34,14 @@ enum MoodType: String, CaseIterable {
                 case .neutral: return "😑"
                 }
             }
+    
+    var score: Double {
+        switch self {
+        case .angry: return 0
+        case .sad: return 1
+        case .neutral: return 2
+        case .calm: return 3
+        case .happy: return 4
+        }
+    }
         }

@@ -65,3 +65,12 @@
 "theme.system" = "Auto";
 "theme.light" = "Light";
 "theme.dark" = "Dark";
+
+/* Mood Chart */
+"tab.chart" = "Mood";
+"mood.chart.title" = "Mood Tracker";
+"mood.chart.empty" = "Not enough data yet.\nAdd moods to your entries to see the graph.";
+
+/* Mood Chart Axis */
+"chart.axis.date" = "Date";
+"chart.axis.mood" = "Mood";
